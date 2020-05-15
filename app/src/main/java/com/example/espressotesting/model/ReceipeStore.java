@@ -7,11 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReceipeStore {
 
     public final List<Reciepe> recipes = new ArrayList<>();
+    private HashMap<String, Reciepe> table  = new HashMap<>();
 
     public ReceipeStore(Context context, String directory) {
         List<InputStream> streams = getInputStream(context.getAssets(), directory);
@@ -20,9 +22,11 @@ public class ReceipeStore {
             Reciepe recipe = Reciepe.readReceipe(stream);
             if (recipe != null) {
                 recipes.add(recipe);
+                table.put(recipe.getId(),recipe);
             }
         }
     }
+
 
     public List<InputStream> getInputStream(AssetManager manager, String directory) {
         List<InputStream> streams = new ArrayList<>();
@@ -51,5 +55,9 @@ public class ReceipeStore {
             return new String[0];
         }
 
+    }
+
+    public Reciepe getRecipe(String id) {
+        return  table.get(id);
     }
 }
