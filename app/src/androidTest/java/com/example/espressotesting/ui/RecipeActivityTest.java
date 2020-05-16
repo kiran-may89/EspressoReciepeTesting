@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.espressotesting.R;
+import com.example.espressotesting.ReceipeRobot;
 import com.example.espressotesting.TestingApplication;
 import com.example.espressotesting.data.InMemorySharedPref;
 import com.example.espressotesting.data.SharedMemory;
@@ -43,6 +44,7 @@ public class RecipeActivityTest {
 
     @Test
     public void launchIntentActivity() {
+        sharedMemory.clear();
         Intent intent = new Intent();
         intent.putExtra(RecipeActivity.KEY_ID, "creamed_carrots");
         activityRule.launchActivity(intent);
@@ -78,4 +80,24 @@ public class RecipeActivityTest {
        TestingApplication app=  (TestingApplication) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         sharedMemory = (InMemorySharedPref) app.getSharedMemory();
     }
+
+
+
+    @Test
+    public void recipeNotFound() {
+        new ReceipeRobot()
+                .launch(activityRule)
+                .noTitle()
+                .description(R.string.recipe_not_found);
+    }
+
+
+    @Test
+    public void alreadyFavorite() {
+        new ReceipeRobot()
+                .setFavorite(id)
+                .launch(activityRule, id)
+                .isFavorite();
+    }
+
 }

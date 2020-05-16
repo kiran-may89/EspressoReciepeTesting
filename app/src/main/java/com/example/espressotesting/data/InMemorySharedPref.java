@@ -28,4 +28,8 @@ private HashMap<String, Object> inMemoryHashMap;
         put(id,!favourite);
         return !favourite;
     }
+
+    public void clear() {
+        inMemoryHashMap.clear();
+    }
 }
