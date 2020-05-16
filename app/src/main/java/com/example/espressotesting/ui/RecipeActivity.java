@@ -7,7 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.espressotesting.App;
 import com.example.espressotesting.R;
+import com.example.espressotesting.data.SharedMemory;
 import com.example.espressotesting.data.SharedPreferencesFavorites;
 import com.example.espressotesting.model.ReceipeStore;
 import com.example.espressotesting.model.Reciepe;
@@ -33,7 +35,7 @@ public class RecipeActivity extends AppCompatActivity {
             return;
         }
 
-        final SharedPreferencesFavorites favorites = new SharedPreferencesFavorites(this);
+        final SharedMemory favorites = ((App)getApplication()).getSharedMemory();
         boolean favorite = favorites.get(recipe.getId());
 
         titleView.setText(recipe.getTitle());

@@ -3,13 +3,15 @@ package com.example.espressotesting.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SharedPreferencesFavorites {
+public class SharedPreferencesFavorites implements SharedMemory {
     private final SharedPreferences pref;
 
     public SharedPreferencesFavorites(Context context) {
         pref = context.getSharedPreferences("favorites.xml", Context.MODE_PRIVATE);
     }
 
+
+    @Override
     public boolean get(String id) {
         return pref.getBoolean(id, false);
     }
@@ -23,7 +25,7 @@ public class SharedPreferencesFavorites {
         }
         editor.apply();
     }
-
+    @Override
     public boolean toggle(String id) {
         boolean favorite = get(id);
         put(id, !favorite);
